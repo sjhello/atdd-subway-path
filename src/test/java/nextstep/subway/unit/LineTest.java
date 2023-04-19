@@ -288,4 +288,9 @@ class LineTest {
         // when & then
         assertThat(강남_2호선.getDistance()).isEqualTo(강남_역삼_구간_거리);
     }
+
+    @Test
+    void test () {
+
+    }
 }
