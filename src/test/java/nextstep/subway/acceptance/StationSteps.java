@@ -20,4 +20,16 @@ public class StationSteps {
                 .then().log().all()
                 .extract();
     }
+
+    public static Long 지하철역_생성_요청_ID(String name) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        return RestAssured.given().log().all()
+                .body(params)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .post("/stations")
+                .then().log().all()
+                .extract().jsonPath().getLong("id");
+    }
 }

@@ -30,6 +30,15 @@ public class LineSteps {
                 .then().log().all().extract();
     }
 
+    public static Long 지하철_노선_생성_요청_ID(Map<String, String> params) {
+        return RestAssured
+                .given().log().all()
+                .body(params)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().post("/lines")
+                .then().log().all().extract().jsonPath().getLong("id");
+    }
+
     public static ExtractableResponse<Response> 지하철_노선_목록_조회_요청() {
         return RestAssured
                 .given().log().all()
