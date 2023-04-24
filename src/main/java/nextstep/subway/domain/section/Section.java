@@ -1,8 +1,10 @@
-package nextstep.subway.domain;
+package nextstep.subway.domain.section;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import nextstep.subway.domain.station.Station;
+import nextstep.subway.domain.line.Line;
 
 import javax.persistence.*;
 import java.util.Arrays;

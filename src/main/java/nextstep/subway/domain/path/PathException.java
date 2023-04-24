@@ -1,6 +1,6 @@
-package nextstep.subway.exception.path;
+package nextstep.subway.domain.path;
 
-import nextstep.subway.exception.ErrorCode;
+import nextstep.subway.common.exception.ErrorCode;
 
 public class PathException extends RuntimeException {
 

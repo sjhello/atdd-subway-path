@@ -1,7 +1,6 @@
-package nextstep.subway.domain;
+package nextstep.subway.domain.section;
 
-import nextstep.subway.exception.section.SectionBadRequestException;
-import nextstep.subway.exception.section.SectionErrorCode;
+import nextstep.subway.domain.station.Station;
 
 import java.util.*;
 import java.util.stream.Collectors;

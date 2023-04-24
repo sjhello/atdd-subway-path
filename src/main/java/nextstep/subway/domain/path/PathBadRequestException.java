@@ -1,4 +1,4 @@
-package nextstep.subway.exception.path;
+package nextstep.subway.domain.path;
 
 public class PathBadRequestException extends PathException {
 

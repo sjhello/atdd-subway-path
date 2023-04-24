@@ -1,6 +1,6 @@
-package nextstep.subway.exception.path;
+package nextstep.subway.domain.path;
 
-import nextstep.subway.exception.ErrorCode;
+import nextstep.subway.common.exception.ErrorCode;
 
 public enum PathErrorCode implements ErrorCode {
     SAME_STATION("출발지와 목적지는 같을 수 없습니다.");

@@ -1,4 +1,4 @@
-package nextstep.subway.exception;
+package nextstep.subway.common.exception;
 
 public interface ErrorCode {
 

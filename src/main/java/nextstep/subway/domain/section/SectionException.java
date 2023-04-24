@@ -1,6 +1,6 @@
-package nextstep.subway.exception.section;
+package nextstep.subway.domain.section;
 
-import nextstep.subway.exception.ErrorCode;
+import nextstep.subway.common.exception.ErrorCode;
 
 public class SectionException extends RuntimeException {
 

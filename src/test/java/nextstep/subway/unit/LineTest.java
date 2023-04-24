@@ -1,10 +1,10 @@
 package nextstep.subway.unit;
 
-import nextstep.subway.domain.Line;
-import nextstep.subway.domain.Section;
-import nextstep.subway.domain.Station;
-import nextstep.subway.exception.section.SectionBadRequestException;
-import nextstep.subway.exception.section.SectionErrorCode;
+import nextstep.subway.domain.line.Line;
+import nextstep.subway.domain.section.Section;
+import nextstep.subway.domain.station.Station;
+import nextstep.subway.domain.section.SectionBadRequestException;
+import nextstep.subway.domain.section.SectionErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

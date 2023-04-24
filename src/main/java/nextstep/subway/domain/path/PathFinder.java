@@ -1,7 +1,7 @@
-package nextstep.subway.domain;
+package nextstep.subway.domain.path;
 
-import nextstep.subway.exception.path.PathBadRequestException;
-import nextstep.subway.exception.path.PathErrorCode;
+import nextstep.subway.domain.line.Line;
+import nextstep.subway.domain.station.Station;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;

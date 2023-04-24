@@ -1,4 +1,4 @@
-package nextstep.subway.exception.section;
+package nextstep.subway.domain.section;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

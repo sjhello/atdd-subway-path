@@ -1,6 +1,6 @@
-package nextstep.subway.exception.section;
+package nextstep.subway.domain.section;
 
-import nextstep.subway.exception.ErrorCode;
+import nextstep.subway.common.exception.ErrorCode;
 
 public enum SectionErrorCode implements ErrorCode {
     SECTION_NOT_FOUND("구간이 존재하지 않습니다."),

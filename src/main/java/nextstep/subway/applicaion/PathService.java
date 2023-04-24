@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import nextstep.subway.applicaion.dto.PathRequest;
 import nextstep.subway.applicaion.dto.PathResponse;
 import nextstep.subway.applicaion.dto.StationResponse;
-import nextstep.subway.domain.*;
-import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.WeightedMultigraph;
+import nextstep.subway.domain.line.Line;
+import nextstep.subway.domain.line.LineRepository;
+import nextstep.subway.domain.path.Path;
+import nextstep.subway.domain.path.PathFinder;
+import nextstep.subway.domain.station.Station;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
