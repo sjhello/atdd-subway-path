@@ -1,6 +1,7 @@
 package nextstep.subway.domain;
 
-import nextstep.subway.exception.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionErrorCode;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,7 +64,7 @@ public class Sections {
 
     private void validateDistance(Section newSection, Section section) {
         if (newSection.getDistance() >= section.getDistance()) {
-            throw new SectionBadRequestException("기존 역 사이 길이보다 크거나 같을 수 없습니다.");
+            throw new SectionBadRequestException(SectionErrorCode.INVALID_DISTANCE_ERROR);
         }
     }
 
@@ -87,10 +88,10 @@ public class Sections {
 
     private void validateAddSection(Section section) {
         if (isSectionIsAlreadyExist(section)) {
-            throw new SectionBadRequestException("상행역과 하행역이 둘 다 이미 등록 되어 있습니다.");
+            throw new SectionBadRequestException(SectionErrorCode.ALREADY_EXISTS);
         }
         if (isNotIncludedOneStation(section)) {
-            throw new SectionBadRequestException("상행역과 하행역이 둘 중 하나라도 기존 구간에 포함 되어 있어야 합니다.");
+            throw new SectionBadRequestException(SectionErrorCode.NOT_INCLUDE_STATION);
         }
     }
 
@@ -144,10 +145,10 @@ public class Sections {
 
     private void validateRemove() {
         if (isEmpty()) {
-            throw new SectionBadRequestException("구간이 존재하지 않습니다.");
+            throw new SectionBadRequestException(SectionErrorCode.SECTION_NOT_FOUND);
         }
         if (hasEnoughSize()) {
-            throw new SectionBadRequestException("현재 노선은 구간이 1개 입니다.");
+            throw new SectionBadRequestException(SectionErrorCode.ONE_SECTION);
         }
     }
 

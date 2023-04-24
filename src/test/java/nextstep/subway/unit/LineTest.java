@@ -3,7 +3,8 @@ package nextstep.subway.unit;
 import nextstep.subway.domain.Line;
 import nextstep.subway.domain.Section;
 import nextstep.subway.domain.Station;
-import nextstep.subway.exception.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +42,7 @@ class LineTest {
         // when
         assertThatThrownBy(() -> 강남_2호선.addSection(강남_삼성_구간))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("기존 역 사이 길이보다 크거나 같을 수 없습니다.");
+                .hasMessage(SectionErrorCode.INVALID_DISTANCE_ERROR.getMessage());
     }
 
     @Test
@@ -55,7 +56,7 @@ class LineTest {
         // when & then
         assertThatThrownBy(() -> 강남_2호선.addSection(새로운_강남_역삼_구간))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("상행역과 하행역이 둘 중 하나라도 기존 구간에 포함 되어 있어야 합니다.");
+                .hasMessage(SectionErrorCode.NOT_INCLUDE_STATION.getMessage());
     }
 
     @Test
@@ -71,7 +72,7 @@ class LineTest {
         // when & then
         assertThatThrownBy(() -> 강남_2호선.addSection(새로운_강남_역삼_구간))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("상행역과 하행역이 둘 다 이미 등록 되어 있습니다.");
+                .hasMessage(SectionErrorCode.ALREADY_EXISTS.getMessage());
     }
 
     @Test
@@ -159,7 +160,7 @@ class LineTest {
     void 노선에_구간이_비어있는_경우_구간을_삭제_할_수_없다() {
         assertThatThrownBy(() -> 강남_2호선.removeSection(삼성역))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("구간이 존재하지 않습니다.");
+                .hasMessage(SectionErrorCode.SECTION_NOT_FOUND.getMessage());
     }
 
     @Test
@@ -170,7 +171,7 @@ class LineTest {
         // then
         assertThatThrownBy(() -> 강남_2호선.removeSection(삼성역))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("현재 노선은 구간이 1개 입니다.");
+                .hasMessage(SectionErrorCode.ONE_SECTION.getMessage());
     }
 
     @Test
@@ -287,10 +288,5 @@ class LineTest {
 
         // when & then
         assertThat(강남_2호선.getDistance()).isEqualTo(강남_역삼_구간_거리);
-    }
-
-    @Test
-    void test () {
-
     }
 }

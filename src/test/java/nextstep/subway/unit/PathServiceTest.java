@@ -11,6 +11,7 @@ import nextstep.subway.domain.LineRepository;
 import nextstep.subway.domain.Station;
 import nextstep.subway.domain.StationRepository;
 import nextstep.subway.exception.path.PathBadRequestException;
+import nextstep.subway.exception.path.PathErrorCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,7 @@ public class PathServiceTest extends ServiceTest {
     void 출발지와_도착지가_같으면_경로조회에_실패한다() {
         // when & then
         assertThatThrownBy(() -> pathService.getPath(new PathRequest(1L, 1L)))
-                .isInstanceOf(PathBadRequestException.class);
+                .isInstanceOf(PathBadRequestException.class)
+                .hasMessage(PathErrorCode.SAME_STATION.getMessage());
     }
 }

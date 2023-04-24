@@ -7,7 +7,8 @@ import nextstep.subway.applicaion.dto.SectionRequest;
 import nextstep.subway.applicaion.dto.StationResponse;
 import nextstep.subway.domain.*;
 
-import nextstep.subway.exception.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionBadRequestException;
+import nextstep.subway.exception.section.SectionErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class LineServiceTest {
     void 노선에_구간이_비어있는_경우_구간을_삭제_할_수_없다() {
         assertThatThrownBy(() -> lineService.deleteSection(강남_2호선.getId(), 강남역.getId()))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("구간이 존재하지 않습니다.");
+                .hasMessage(SectionErrorCode.SECTION_NOT_FOUND.getMessage());
     }
 
     @Test
@@ -108,7 +109,7 @@ public class LineServiceTest {
         // when & then
         assertThatThrownBy(() -> lineService.deleteSection(강남_2호선.getId(), 삼성역.getId()))
                 .isInstanceOf(SectionBadRequestException.class)
-                .hasMessage("현재 노선은 구간이 1개 입니다.");
+                .hasMessage(SectionErrorCode.ONE_SECTION.getMessage());
     }
 
     @Test
