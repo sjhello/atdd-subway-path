@@ -26,12 +26,8 @@ public class PathService {
         Station source = stationService.findById(pathRequest.getSource());
         Station target = stationService.findById(pathRequest.getTarget());
 
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("출발지와 목적지는 같을 수 없습니다.");
-        }
-
         List<Line> lines = lineRepository.findAll();
-        PathFinder2 pathFinder = new PathFinder2(lines);
+        PathFinder pathFinder = new PathFinder(lines);
 
         return createPathResponse(pathFinder.findShortPath(source, target));
     }
