@@ -14,29 +14,41 @@ public class PathFinder {
     private DijkstraShortestPath dijkstraShortestPath;
 
     public PathFinder(List<Line> lines) {
-        WeightedMultigraph weightedMultigraph = drawGraph(lines);
-        dijkstraShortestPath = new DijkstraShortestPath(weightedMultigraph);
+        drawGraph(lines);
+        dijkstraShortestPath = new DijkstraShortestPath(graph);
     }
 
-    private WeightedMultigraph drawGraph(List<Line> lines) {
+    private void drawGraph(List<Line> lines) {
         graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
-        for (Line line : lines) {
-            line.getStations().stream().forEach(graph :: addVertex);
-            line.getSections().stream().forEach(section ->
-                    graph.setEdgeWeight(
-                            graph.addEdge(section.getUpStation(), section.getDownStation()), section.getDistance())
-            );
-        }
-        return graph;
+        lines.forEach(line -> {
+            addVertex(line);
+            addEdgeWeight(line);
+        });
+    }
+
+    private void addEdgeWeight(Line line) {
+        line.getSections().stream().forEach(
+                section -> graph.setEdgeWeight(graph.addEdge(section.getUpStation(), section.getDownStation()), section.getDistance())
+        );
+    }
+
+    private void addVertex(Line line) {
+        line.getStations()
+                .stream()
+                .forEach(graph :: addVertex);
     }
 
     public Path findShortPath(Station source, Station target) {
-        if (source.equals(target)) {
-            throw new PathBadRequestException(PathErrorCode.SAME_STATION);
-        }
+        validateStation(source, target);
 
         GraphPath path = dijkstraShortestPath.getPath(source, target);
         return new Path(path.getVertexList(), (int)path.getWeight());
+    }
+
+    private void validateStation(Station source, Station target) {
+        if (source.equals(target)) {
+            throw new PathBadRequestException(PathErrorCode.SAME_STATION);
+        }
     }
 
 }
