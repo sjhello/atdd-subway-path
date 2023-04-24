@@ -1,4 +1,4 @@
-package nextstep.subway.applicaion.dto;
+package nextstep.subway.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class PathResponse {
+@NoArgsConstructor
+public class Path {
 
-    private List<StationResponse> stations;
+    private List<Station> stations;
+
     private int distance;
 }

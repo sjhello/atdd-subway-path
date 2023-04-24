@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nextstep.subway.applicaion.dto.PathRequest;
 import nextstep.subway.applicaion.dto.PathResponse;
 import nextstep.subway.applicaion.dto.StationResponse;
-import nextstep.subway.domain.Line;
-import nextstep.subway.domain.LineRepository;
-import nextstep.subway.domain.Station;
+import nextstep.subway.domain.*;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -14,6 +12,7 @@ import org.jgrapht.graph.WeightedMultigraph;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,21 +26,23 @@ public class PathService {
         Station source = stationService.findById(pathRequest.getSource());
         Station target = stationService.findById(pathRequest.getTarget());
 
-        List<Line> lines = lineRepository.findAll();
-
-        WeightedMultigraph<Station, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
-
-        for (Line line : lines) {
-            line.getStations().stream().forEach(graph :: addVertex);
-            line.getSections().stream().forEach(section ->
-                    graph.setEdgeWeight(
-                            graph.addEdge(section.getUpStation(), section.getDownStation()), section.getDistance())
-            );
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("출발지와 목적지는 같을 수 없습니다.");
         }
 
-        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
-        GraphPath shortestPath = dijkstraShortestPath.getPath(source, target);
+        List<Line> lines = lineRepository.findAll();
+        PathFinder2 pathFinder = new PathFinder2(lines);
 
-        return new PathResponse();
+        return createPathResponse(pathFinder.findShortPath(source, target));
+    }
+
+    private List<StationResponse> createStationResponse(List<Station> stations) {
+        return stations.stream()
+                .map(stationService :: createStationResponse)
+                .collect(Collectors.toList());
+    }
+
+    private PathResponse createPathResponse(Path path) {
+        return new PathResponse(createStationResponse(path.getStations()), path.getDistance());
     }
 }
