@@ -28,11 +28,13 @@ class PathAcceptanceTest extends AcceptanceTest{
 
 
     /**
+     *              10
      * 교대역    --- *2호선* ---   강남역
      * |                        |
-     * *3호선*                   *신분당선*
+     * *3호선*  2                 *신분당선*       10
      * |                        |
      * 남부터미널역  --- *3호선* ---   양재
+     *               3
      */
 
     /**
@@ -54,15 +56,18 @@ class PathAcceptanceTest extends AcceptanceTest{
         지하철_노선에_지하철_구간_생성_요청(삼호선, createSectionCreateParams(남부터미널역, 양재역, 3));
     }
 
-    /*
-    *
-    * */
+    /**
+     * When 목적지와 도착지의 경로를 조회하면
+     * Then 목적지와 도착지의 최단 경로가 조회된다
+     * */
     @Test
-    void 경로를_조회_한다() {
+    void 최단경로를_조회_한다() {
         // when
-        ExtractableResponse<Response> response = 경로_조회_요청(교대역, 강남역);
+        ExtractableResponse<Response> response = 경로_조회_요청(교대역, 양재역);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.jsonPath().getInt("distance")).isEqualTo(5);
+        assertThat(response.jsonPath().getList("stations.id", Long.class)).containsExactly(교대역, 남부터미널역, 양재역);
     }
 }
