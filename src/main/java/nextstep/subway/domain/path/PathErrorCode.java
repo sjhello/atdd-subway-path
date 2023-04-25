@@ -3,7 +3,8 @@ package nextstep.subway.domain.path;
 import nextstep.subway.common.exception.ErrorCode;
 
 public enum PathErrorCode implements ErrorCode {
-    SAME_STATION("출발지와 목적지는 같을 수 없습니다.");
+    SAME_STATION("출발지와 목적지는 같을 수 없습니다."),
+    NOT_CONNECTION("출발지와 목적지가 연결되어 있지 않습니다.");
 
     private final String message;
 

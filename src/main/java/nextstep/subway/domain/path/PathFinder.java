@@ -8,6 +8,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PathFinder {
     private WeightedMultigraph<Station, DefaultWeightedEdge> graph;
@@ -42,6 +43,9 @@ public class PathFinder {
         validateStation(source, target);
 
         GraphPath path = dijkstraShortestPath.getPath(source, target);
+        if (Objects.isNull(path)) {
+            throw new PathBadRequestException(PathErrorCode.NOT_CONNECTION);
+        }
         return new Path(path.getVertexList(), (int)path.getWeight());
     }
 

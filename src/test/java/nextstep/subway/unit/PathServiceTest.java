@@ -40,6 +40,9 @@ public class PathServiceTest extends ServiceTest {
     private Line 이호선;
     private Line 신분당선;
     private Line 삼호선;
+    private Station 길동역;
+    private Station 강동역;
+    private Line 오호선;
 
     /**
      *              10
@@ -56,6 +59,8 @@ public class PathServiceTest extends ServiceTest {
         교대역 = stationRepository.save(new Station("교대역"));
         강남역 = stationRepository.save(new Station("강남역"));
         양재역 = stationRepository.save(new Station("양재역"));
+        길동역 = stationRepository.save(new Station("길동역"));
+        강동역 = stationRepository.save(new Station("강동역"));
         남부터미널역 = stationRepository.save(new Station("남부터미널역"));
 
         이호선 = lineRepository.save(new Line("이호선", "green"));
@@ -67,6 +72,9 @@ public class PathServiceTest extends ServiceTest {
         삼호선 = lineRepository.save(new Line("삼호선", "orange"));
         lineService.addSection(삼호선.getId(), new SectionRequest(교대역.getId(), 남부터미널역.getId(), 2));
         lineService.addSection(삼호선.getId(), new SectionRequest(남부터미널역.getId(), 양재역.getId(), 3));
+
+        오호선 = lineRepository.save(new Line("오호선", "purple"));
+        lineService.addSection(오호선.getId(), new SectionRequest(길동역.getId(), 강동역.getId(), 17));
     }
 
     @Test
@@ -85,5 +93,12 @@ public class PathServiceTest extends ServiceTest {
         assertThatThrownBy(() -> pathService.getPath(new PathRequest(1L, 1L)))
                 .isInstanceOf(PathBadRequestException.class)
                 .hasMessage(PathErrorCode.SAME_STATION.getMessage());
+    }
+
+    @Test
+    void 출발지와_도착지가_연결되어_있지_않으면_경로조회에_실패한다() {
+        assertThatThrownBy(() -> pathService.getPath(new PathRequest(교대역.getId(), 길동역.getId())))
+                .isInstanceOf(PathBadRequestException.class)
+                .hasMessage(PathErrorCode.NOT_CONNECTION.getMessage());
     }
 }
