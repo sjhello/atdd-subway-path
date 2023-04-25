@@ -148,8 +148,8 @@ class SectionAcceptanceTest extends AcceptanceTest {
      * When 기존 구간 사이에 신규 구간을 추가할때 신규 구간의 거리가 기존 구간의 역 사이 길이보다 크거나 같으면
      * Then 구간을 등록 할 수 없다
      */
-    @ParameterizedTest
-    @ValueSource(ints = {12, 10})
+    @ParameterizedTest(name = "{index} ==> 기존 역 사이의 길이는 10 이지만 추가하려는 역 사이의 길이는 {arguments}")
+    @ValueSource(ints = {10, 12})
     void 역_사이에_새로운_역을_등록할_경우_기존_역_사이_길이보다_크거나_같으면_등록_할_수_없다(int inputDistance) {
         // when
         ExtractableResponse<Response> response = 지하철_노선에_지하철_구간_생성_요청(신분당선, createSectionCreateParams(강남역, 삼성역, inputDistance));

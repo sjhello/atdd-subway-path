@@ -31,7 +31,7 @@ class LineTest {
         삼성역 = new Station("삼성역");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} ==> 기존 역 사이의 길이는 11 이지만 추가하려는 역의 길이는 {arguments}")
     @ValueSource(ints = {11, 20})
     void 기존_역_사이_길이보다_크거나_같으면_구간을_추가_할_수_없다(int 강남_삼성_구간_거리) {
         // given
