@@ -54,4 +54,25 @@ class JgraphtTest {
                     assertThat(it.getVertexList()).endsWith(target);
                 });
     }
+
+    @Test
+    void notConnection() {
+        String source = "v1";
+        String target = "v5";
+
+        WeightedMultigraph<String, DefaultWeightedEdge> graph = new WeightedMultigraph(DefaultWeightedEdge.class);
+        graph.addVertex("v1");
+        graph.addVertex("v2");
+        graph.addVertex("v3");
+        graph.addVertex("v4");
+        graph.addVertex("v5");
+        graph.setEdgeWeight(graph.addEdge("v1", "v2"), 2);
+        graph.setEdgeWeight(graph.addEdge("v1", "v3"), 2);
+        graph.setEdgeWeight(graph.addEdge("v4", "v5"), 100);
+
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
+        List<String> shortestPath = dijkstraShortestPath.getPath(source, target).getVertexList();
+
+        assertThat(shortestPath.size()).isEqualTo(3);
+    }
 }
